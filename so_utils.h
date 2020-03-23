@@ -6,6 +6,7 @@
 #define BUFSIZE 4096
 #define RIGHTS  0644
 #define PATH_SHELL "/bin/sh"
+#define NO_ARG 4
 
 typedef struct _info_file {
 	int flagError;      /* eroare */

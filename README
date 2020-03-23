@@ -1,0 +1,59 @@
+ Nume: Margineanu Nicolae-Vladut
+ Grupă: 333CA
+
+ Tema 2 - Bibliotecă Stdio
+
+  1. Organizare
+
+  Explicație pentru structura creată (sau soluția de ansamblu aleasă):
+  In rezolvarea temei, am implementat functiile din header-ul so_stdio.h,
+ tinand cont de proprietatea de buffering. Structura SO_FILE are rolul de a
+ stoca informatia pe parcursul rularii programului, astfel:
+ - la deschiderea unui fisier, acesta retine file descriptor-ul
+ - proprietatea de buffering este realizata cu ajutorul buffer-ului
+ - aceasta contine o structura interioara care retine urmatoarele proprietati:
+ eroare pe parcursul derularii functiilor, flagul de sfarsit de fisier, ce
+ operatie a fost realizata recent, de scriere sau de citire, pozitia curenta din
+ buffer, numarul de bytes cititi, pid-ul procesului copil.
+  Am realizat functii ajutatoare in so_utilc.c, astfel: functie care imi
+ intoarce modul de deschidere a unui fisier, functie care aloca memorie,
+ functie care dezaloca memorie si functie care initializeaza structura SO_FILE.
+
+  Solutia de ansamblu este: citirea si scrierea se realizeaza intr-un buffer
+ din structura SO_FILE. In cazul scrierii, buffer-ul la umplere este scris in
+ fisier. In cazul citirii, umpleam buffer-ul cu informatie din fisier. Dupa ce
+ terminam de parcurs buffer-ul, umpleam din nou buffer-ul cu informatie noua
+ din fisier. Rularea de procese a fost implementata cu ajutorul functiilor de
+ sistem: pipe, fork, execv, dup2, waitpid.
+
+  2. Implementare
+
+  Intregul enunt a fost implementat. Programul trece toate testele.
+  Pe parcursul temei am intampinat urmatoarele probleme:
+ 1. Nu verificam daca inchid fisierul corect
+ 2. La sciere si citire, nu foloseam functiile so_fputc si so_fgtec intr-o
+ structura while, care la randul lor apeleaza functiile de sistem write si 
+ read. Nu scriam/citeam toata informatia din buffer/fisier.
+ 3. In rularea de procese, accesam o zona invalida de memorie si primeam
+ Segmentation Fault.
+ 4. Functia write nu scrie tot continutul din buffer, asa ca trebuie pus intr-o
+ structura while.
+ 5. In functia so_fclose nu dezalocam memoria statica in cazul in care functia
+ so_fflush intoarce eroare.
+
+  3. Cum se compilează și cum se rulează?
+ Cu ajutorul utilitarului Makefile. Acesta linkeaza urmatoarele fisiere:
+ so_utils.c, so_stdio.c.
+
+  4. Bibliografie
+ - Laboratorul 2 si 3 SO
+ [https://ocw.cs.pub.ro/courses/so/laboratoare/laborator-02]
+ [https://ocw.cs.pub.ro/courses/so/laboratoare/laborator-03]
+ - Pentru rularea de procese
+ [https://android.googlesource.com/platform/bionic/+/3884bfe9661955543ce203c60
+ f9225bbdf33f6bb/libc/unistd/popen.c]
+
+  5. Git
+ Link către repo-ul de git - privat
+ [https://github.com/vladutmargineanu/Stdio-Library]
+

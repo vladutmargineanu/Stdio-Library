@@ -6,22 +6,22 @@
 
 int choose_mode(const char *mode)
 {
-	if (strcmp(mode, "r") == 0) 
+	if (strcmp(mode, "r") == 0)
 		return O_RDONLY;
-	
-	if (strcmp(mode, "r+") == 0) 
+
+	if (strcmp(mode, "r+") == 0)
 		return O_RDWR;
-	
-	if (strcmp(mode, "w") == 0) 
+
+	if (strcmp(mode, "w") == 0)
 		return O_WRONLY | O_CREAT | O_TRUNC;
-	
-	if (strcmp(mode, "w+") == 0) 
+
+	if (strcmp(mode, "w+") == 0)
 		return O_RDWR | O_CREAT | O_TRUNC;
-	
-	if (strcmp(mode, "a") == 0) 
+
+	if (strcmp(mode, "a") == 0)
 		return O_WRONLY | O_CREAT | O_APPEND;
-	
-	if (strcmp(mode, "a+") == 0) 
+
+	if (strcmp(mode, "a+") == 0)
 		return O_RDWR | O_CREAT | O_APPEND;
 
 	return -1;
@@ -33,8 +33,7 @@ SO_FILE *allocate_memory(const char *pathname, const char *mode)
 
 	if (pathname == NULL)
 		stream->pathname = NULL;
-	else
-	{
+	else {
 		stream->pathname = malloc(strlen(pathname) + 1);
 
 		if (stream->pathname == NULL)
@@ -45,8 +44,7 @@ SO_FILE *allocate_memory(const char *pathname, const char *mode)
 
 	if (mode == NULL)
 		stream->mode = NULL;
-	else
-	{
+	else {
 		stream->mode = malloc(strlen(mode) + 1);
 
 		if (stream->mode == NULL)
@@ -95,4 +93,3 @@ void initialize_file(SO_FILE *stream)
 	stream->info.currPos = 0;
 	stream->info.ftellBytes = 0;
 }
-  
